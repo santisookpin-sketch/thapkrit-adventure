@@ -1,0 +1,8 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "thapkrit-adventure",
+  "main": "src/worker.js",
+  "compatibility_date": "2026-09-01",
+  "assets": { "directory": "./public", "binding": "ASSETS", "run_worker_first": ["/api/*", "/admin", "/admin/*"] },
+  "d1_databases": [{ "binding": "DB", "database_name": "thapkrit-adventure", "database_id": "REPLACE_WITH_D1_DATABASE_ID" }]
+}

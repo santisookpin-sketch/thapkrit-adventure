@@ -1,0 +1,15 @@
+{
+  "name": "thapkrit-adventure-cloudflare",
+  "private": true,
+  "version": "21.0.0",
+  "scripts": {
+    "dev": "wrangler dev --local",
+    "deploy": "wrangler deploy",
+    "db:local": "wrangler d1 migrations apply thapkrit-adventure --local",
+    "db:remote": "wrangler d1 migrations apply thapkrit-adventure --remote"
+  },
+  "devDependencies": {
+    "wrangler": "^4.40.0"
+  },
+  "type": "module"
+}
