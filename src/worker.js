@@ -34,7 +34,9 @@ export default {async fetch(request,env){const url=new URL(request.url),path=url
   if(path==='/api/health')return json({ok:true,service:'thapkrit-adventure',time:now()});
   if(path==='/api/player'&&method==='POST'){
     const b=await readJSON(request);let nickname=String(b.nickname||'').trim().replace(/[<>]/g,'');const phone=String(b.phone||'').replace(/[\s-]/g,'');if(!validateNickname(nickname))return err('ชื่อผู้เล่นต้องยาว 2–24 ตัวอักษร');if(!validatePhone(phone)||b.consent!==true)return err('กรุณาใส่เบอร์โทร 10 หลักและยินยอมข้อมูล');
-    env.DB.prepare("INSERT INTO players(id,nickname,session_hash,phone,prize_consent_at) VALUES(?,?,?,?,datetime('now'))")
+    
+const id=randomId(),token=randomToken();await env.DB.prepare("INSERT INTO players(id,nickname,session_hash,phone,prize_consent_at) VALUES(?,?,?,?,datetime('now'))").bind(id,nickname,await sha256(token),phone).run();return json({ok:true,id,nickname,token});
+
   }
   if(path==='/api/player/me'&&method==='GET'){const p=await requirePlayer(request,env);if(!p)return err('กรุณาเข้าสู่เกมอีกครั้ง',401);return json({ok:true,player:p});}
   if(path==='/api/settings'&&method==='GET'){
